@@ -1,4 +1,4 @@
-package a_Introductory;
+package Quadrilateral;
 
 public class Point {
 	public Integer x, y;

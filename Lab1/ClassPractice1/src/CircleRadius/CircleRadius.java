@@ -1,3 +1,5 @@
+package CircleRadius;
+
 import java.util.Scanner;
 
 public class CircleRadius {
