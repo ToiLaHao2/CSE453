@@ -1,16 +1,20 @@
 package Q2.b_Money_Test;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import Q2.b_Money.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MoneyTest {
 	Currency SEK, DKK, NOK, EUR;
 	Money SEK100, EUR10, SEK200, EUR20, SEK0, EUR0, SEKn100;
-	
+
 	@BeforeAll
 	public void setUp() throws Exception {
 		SEK = new Currency("SEK", 0.15);
@@ -27,51 +31,60 @@ public class MoneyTest {
 
 	@Test
 	public void testGetAmount() {
-		fail("Write test case here");
+		assertEquals(10000, SEK100.getAmount());
 	}
 
 	@Test
 	public void testGetCurrency() {
-		fail("Write test case here");
+		assertEquals(SEK, SEK100.getCurrency());
 	}
 
 	@Test
 	public void testToString() {
-		fail("Write test case here");
+		assertEquals("10000 SEK", SEK100.toString());
 	}
 
 	@Test
 	public void testGlobalValue() {
-		fail("Write test case here");
+		assertEquals(1500, SEK100.universalValue());
 	}
 
 	@Test
 	public void testEqualsMoney() {
-		fail("Write test case here");
+		Money testMoneyWithSEK = new Money(10000, SEK);
+		Money testMoneyWithDKK = new Money(10000, DKK);
+		assertTrue(SEK100.equals(testMoneyWithSEK));
+		assertFalse(SEK100.equals(testMoneyWithDKK));
 	}
 
+	// 1000 in dkk = 1500 => 2500
 	@Test
 	public void testAdd() {
-		fail("Write test case here");
+		Money testAddMoneyWithDKK = new Money(10000, DKK);
+		Money moneyAfterAdd = SEK100.add(testAddMoneyWithDKK);
+		assertEquals(new Money(17500, SEK), moneyAfterAdd);
 	}
 
 	@Test
 	public void testSub() {
-		fail("Write test case here");
+		Money testSubMoneyWithDKK = new Money(10000, DKK);
+		Money moneyAfterSub = SEK100.sub(testSubMoneyWithDKK);
+		assertEquals(new Money(2500, SEK), moneyAfterSub);
 	}
 
 	@Test
 	public void testIsZero() {
-		fail("Write test case here");
+		assertTrue(SEK0.isZero());
+		assertFalse(SEK100.isZero());
 	}
 
 	@Test
 	public void testNegate() {
-		fail("Write test case here");
+		assertEquals(SEKn100, SEK100.negate());
 	}
 
 	@Test
 	public void testCompareTo() {
-		fail("Write test case here");
+		assertThrows(Exception.class, ()->SEK100.compareTo(DKK));
 	}
 }

@@ -1,16 +1,17 @@
 package Q2.b_Money_Test;
 
-
-import static org.junit.jupiter.api.Assertions.fail;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import Q2.b_Money.Currency;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class CurrencyTest {
 	Currency SEK, DKK, NOK, EUR;
-	
+
 	@BeforeAll
 	public void setUp() throws Exception {
 		/* Setup currencies with exchange rates */
@@ -21,27 +22,30 @@ public class CurrencyTest {
 
 	@Test
 	public void testGetName() {
-		fail("Write test case here");
+		assertEquals("EUR", EUR.getName());
 	}
-	
+
 	@Test
 	public void testGetRate() {
-		fail("Write test case here");
+		assertEquals(0.15, SEK.getRate());
 	}
-	
+
 	@Test
 	public void testSetRate() {
-		fail("Write test case here");
+		DKK.setRate(0.24);
+		assertTrue(0.24 == DKK.getRate());
 	}
-	
+
+	// Test with SEK ; 0.15 => universal value with 1000 : 150
 	@Test
 	public void testGlobalValue() {
-		fail("Write test case here");
+		assertEquals(150, SEK.universalValue(1000));
 	}
-	
+
+	// Test with SEK : 1333 compare with DKK : 200 
 	@Test
 	public void testValueInThisCurrency() {
-		fail("Write test case here");
+		assertEquals(1333, SEK.valueInThisCurrency(1000, DKK));
 	}
 
 }
