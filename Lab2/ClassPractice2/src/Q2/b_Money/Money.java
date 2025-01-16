@@ -1,5 +1,8 @@
 package Q2.b_Money;
 
+import java.util.Objects;
+
+@SuppressWarnings("rawtypes")
 public class Money implements Comparable {
 	private int amount;
 	private Currency currency;
@@ -42,6 +45,7 @@ public class Money implements Comparable {
 	 * 
 	 * @return String representing the amount of Money.
 	 */
+	@Override
 	public String toString() {
 		return amount + " " + currency.getName();
 	}
@@ -62,8 +66,19 @@ public class Money implements Comparable {
 	 * @param other The other Money that is being compared to this Money.
 	 * @return A Boolean indicating if the two monies are equal.
 	 */
-	public Boolean equals(Money other) {
-		return this
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true; // Kiểm tra cùng tham chiếu
+		if (obj == null || getClass() != obj.getClass())
+			return false; // Kiểm tra null hoặc khác kiểu
+		Money money = (Money) obj; // Ép kiểu
+		return amount == money.amount && currency.equals(money.currency); // So sánh nội dung
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(amount, currency); // Sử dụng helper từ java.util.Objects
 	}
 
 	/**
@@ -75,7 +90,9 @@ public class Money implements Comparable {
 	 *         (Remember to convert the other Money before adding the amounts)
 	 */
 	public Money add(Money other) {
-
+		int otherValueInThisCurrency = other.currency.valueInThisCurrency(other.amount, this.currency);
+		int totalAmount = this.amount + otherValueInThisCurrency;
+		return new Money(totalAmount, this.currency);
 	}
 
 	/**
@@ -89,7 +106,9 @@ public class Money implements Comparable {
 	 *         Currency)
 	 */
 	public Money sub(Money other) {
-
+		int otherValueInThisCurrency = other.currency.valueInThisCurrency(other.amount, this.currency);
+		int resultAmount = this.amount - otherValueInThisCurrency;
+		return new Money(resultAmount, this.currency);
 	}
 
 	/**
@@ -98,7 +117,7 @@ public class Money implements Comparable {
 	 * @return True if the amount of this Money is equal to 0.0, False otherwise
 	 */
 	public Boolean isZero() {
-
+		return this.amount == 0;
 	}
 
 	/**
@@ -109,7 +128,7 @@ public class Money implements Comparable {
 	 *         money amount.
 	 */
 	public Money negate() {
-
+		return new Money(-this.amount, this.currency);
 	}
 
 	/**
@@ -127,6 +146,10 @@ public class Money implements Comparable {
 	 *         Money.
 	 */
 	public int compareTo(Object other) {
-
+		if (!(other instanceof Money)) {
+			throw new IllegalArgumentException("Cannot compare Money with non-Money object.");
+		}
+		Money otherMoney = (Money) other;
+		return this.universalValue().compareTo(otherMoney.universalValue());
 	}
 }
