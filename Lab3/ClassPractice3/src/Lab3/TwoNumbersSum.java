@@ -1,4 +1,4 @@
-
+package Lab3;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,20 +12,25 @@ public class TwoNumbersSum {
         int complement = 0;
         ArrayList<Integer> result = new ArrayList<>();
 
-        for(int i = 0; i < Math.max(first.size(), second.size()); i++){
+        for (int i = 0; i < Math.max(first.size(), second.size()); i++) {
             int firstVal = i < first.size() ? first.get(i) : 0;
             int secondVal = i < second.size() ? second.get(i) : 0;
             int total = firstVal + secondVal + complement;
-            complement = 0;
-            if (total >= 10){ 
-                complement = 1;
-                total -= 10;
-            }
-            result.add(i, total);
+            // complement = 0;
+            // if (total >= 10) {
+            // complement = 1;
+            // total -= 10;
+            // }
+            // result.add(i, total);
+            complement = total / 10; // Tự động xử lý carry
+            total = total % 10; // Lấy phần còn lại
+            result.add(total);
         }
-
+        // Thêm carry cuối cùng nếu còn dư
+        if (complement > 0) {
+            result.add(complement);
+        }
         Collections.reverse(result);
         return result;
     }
 }
-
