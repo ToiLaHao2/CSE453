@@ -27,7 +27,7 @@ public class WebFormSteps {
         if (driver == null) {
             // Cấu hình đường dẫn đến chromedriver theo đường dẫn tương đối hoặc tuyệt đối
             System.setProperty("webdriver.chrome.driver",
-                    "D:\\CSE\\CSE453\\CSE453\\Lab7\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+                    "./drivers/chromedriver.exe");
             driver = new ChromeDriver();
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
